@@ -25,8 +25,8 @@ public class Employee implements Serializable {
     /**
      * 员工ID (主键)
      */
-    @TableId(value = "employee_id", type = IdType.AUTO)
-    private Long employeeId;
+    @TableId(value = "employeeid", type = IdType.AUTO)
+    private Long employeeid;  // 注意：Controller 中使用的是 employeeid 而不是 employeeId
 
     /**
      * 用户名
@@ -34,7 +34,7 @@ public class Employee implements Serializable {
     private String username;
 
     /**
-     * 密码
+     * 密码 (MD5加密存储)
      */
     private String password;
 
@@ -64,6 +64,11 @@ public class Employee implements Serializable {
      * 状态 (0:未审批, 1:正常, 2:审批未通过)
      */
     private Integer status;
+
+    /**
+     * 角色 (用于权限管理)
+     */
+    private String role;
 
     /**
      * 创建时间
