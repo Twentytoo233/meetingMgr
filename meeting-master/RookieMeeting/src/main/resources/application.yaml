@@ -54,9 +54,9 @@ photo:
   tmp: D:/photo/Tmp/
 
 baidu:
-  appId:  #appId
-  key:  #key
-  secret: #secret
+  appId: "119268004"
+  key: "e0DVaV4rL4HjD8L4hb7p9DTB"
+  secret: "pokSVndHMUYQAAB24rwMlxXQDUtCacVi"
 mybatis-plus:
   configuration:
     cache-enabled: true
