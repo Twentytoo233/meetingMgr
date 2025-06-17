@@ -25,8 +25,8 @@ public class Meeting implements Serializable {
     /**
      * 会议ID (主键)
      */
-    @TableId(value = "meeting_id", type = IdType.AUTO)
-    private Long meetingId;
+    @TableId(value = "meetingid", type = IdType.AUTO)
+    private Integer meetingid;  // 注意类型为 Integer，与 Controller 中的 @PathVariable 匹配
 
     /**
      * 会议标题
@@ -63,7 +63,7 @@ public class Meeting implements Serializable {
     private Date endTime;
 
     /**
-     * 预定时间 (新增字段)
+     * 预定时间
      */
     @TableField("reservationtime")
     private Date reservationtime;
@@ -78,4 +78,6 @@ public class Meeting implements Serializable {
      */
     @TableField("create_time")
     private Date createTime;
+
+    // 其他可能存在的字段...
 }
