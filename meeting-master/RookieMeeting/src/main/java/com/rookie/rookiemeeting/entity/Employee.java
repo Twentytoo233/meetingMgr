@@ -26,7 +26,7 @@ public class Employee implements Serializable {
      * 员工ID (主键)
      */
     @TableId(value = "employeeid", type = IdType.AUTO)
-    private Long employeeid;  // 注意：Controller 中使用的是 employeeid 而不是 employeeId
+    private Long employeeid;
 
     /**
      * 用户名
@@ -39,7 +39,7 @@ public class Employee implements Serializable {
     private String password;
 
     /**
-     * 真实姓名
+     * 真实姓名 (对应DTO中的employeename)
      */
     @TableField("real_name")
     private String realName;
@@ -67,6 +67,7 @@ public class Employee implements Serializable {
 
     /**
      * 角色 (用于权限管理)
+     * 存储角色标识（如：1-普通用户, 2-管理员）
      */
     private String role;
 
@@ -76,5 +77,48 @@ public class Employee implements Serializable {
     @TableField("create_time")
     private Date createTime;
 
+    /**
+     * 人脸照片路径
+     */
+    @TableField("face_photo")
+    private String facePhoto;
+
+    /**
+     * 是否已录入人脸
+     */
+    @TableField("face_registered")
+    private Boolean faceRegistered;
+
     // 其他可能存在的字段...
+
+    /**
+     * 检查是否已录入人脸
+     */
+    public boolean isFaceRegistered() {
+        return faceRegistered != null && faceRegistered;
+    }
+
+    /**
+     * 获取角色描述（用于EasyPoi导出）
+     */
+    public String getRoleDescription() {
+        if ("1".equals(role)) {
+            return "普通用户";
+        } else if ("2".equals(role)) {
+            return "管理员";
+        }
+        return role;
+    }
+
+    /**
+     * 获取状态描述（用于EasyPoi导出）
+     */
+    public String getStatusDescription() {
+        switch (status) {
+            case 0: return "未审批";
+            case 1: return "正常";
+            case 2: return "审批未通过";
+            default: return String.valueOf(status);
+        }
+    }
 }
