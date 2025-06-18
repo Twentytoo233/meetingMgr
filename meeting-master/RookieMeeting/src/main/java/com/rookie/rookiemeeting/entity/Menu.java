@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单实体类
@@ -73,5 +74,27 @@ public class Menu implements Serializable {
      */
     private String component;
 
+    // ================ 树形结构支持 ================
+
+    /**
+     * 子菜单列表（非数据库字段）
+     */
+    @TableField(exist = false)
+    private List<Menu> children;
+
+    /**
+     * 获取父菜单ID（兼容 pid 方法调用）
+     */
+    public Integer getPid() {
+        return this.parentId;
+    }
+
+    /**
+     * 设置父菜单ID（兼容 pid 方法调用）
+     */
+    public void setPid(Integer pid) {
+        this.parentId = pid;
+    }
     // 其他可能存在的字段...
+
 }

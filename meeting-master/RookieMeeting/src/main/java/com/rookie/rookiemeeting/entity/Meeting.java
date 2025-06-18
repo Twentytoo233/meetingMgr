@@ -41,9 +41,10 @@ public class Meeting implements Serializable {
 
     /**
      * 预定人ID (组织者ID)
+     * 修改为 Integer 类型
      */
     @TableField("reservationistid")
-    private Integer reservationistid;
+    private Long reservationistid;
 
     /**
      * 参会人数

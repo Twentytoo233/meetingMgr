@@ -27,6 +27,7 @@ public class Employee implements Serializable {
 
     /**
      * 员工ID (主键)
+     * 修改为 Integer 类型
      */
     @TableId(value = "employeeid", type = IdType.AUTO)
     private Long employeeid;
