@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.rookie.rookiemeeting.dto.LoginDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 员工实体类
@@ -39,16 +42,16 @@ public class Employee implements Serializable {
     private String password;
 
     /**
-     * 真实姓名 (对应DTO中的employeename)
+     * 员工姓名 (对应 XML 中的 employeename)
      */
-    @TableField("real_name")
-    private String realName;
+    @TableField("employeename")
+    private String employeename;
 
     /**
      * 部门ID
      */
-    @TableField("department_id")
-    private Integer departmentId;
+    @TableField("departmentid")
+    private Integer departmentid;
 
     /**
      * 邮箱
@@ -66,8 +69,7 @@ public class Employee implements Serializable {
     private Integer status;
 
     /**
-     * 角色 (用于权限管理)
-     * 存储角色标识（如：1-普通用户, 2-管理员）
+     * 角色标识 (如：1-普通用户, 2-管理员)
      */
     private String role;
 
@@ -89,7 +91,13 @@ public class Employee implements Serializable {
     @TableField("face_registered")
     private Boolean faceRegistered;
 
-    // 其他可能存在的字段...
+    /**
+     * 逻辑删除标志 (0:未删除, 1:已删除)
+     */
+    @TableField("is_delete")
+    private Integer isDelete;
+
+    // ============== 实用方法 ==============
 
     /**
      * 检查是否已录入人脸
@@ -99,26 +107,31 @@ public class Employee implements Serializable {
     }
 
     /**
-     * 获取角色描述（用于EasyPoi导出）
+     * 转换为登录DTO对象
      */
-    public String getRoleDescription() {
-        if ("1".equals(role)) {
-            return "普通用户";
-        } else if ("2".equals(role)) {
-            return "管理员";
-        }
-        return role;
+    public LoginDto toLoginDto(String token, List<Menu> menus) {
+        LoginDto loginDto = new LoginDto();
+        loginDto.setEmployeeid(this.employeeid);
+        loginDto.setUsername(this.username);
+        loginDto.setEmployeename(this.employeename);
+        loginDto.setRole(this.role);
+        loginDto.setToken(token);
+        loginDto.setMenus(menus);
+        return loginDto;
     }
 
     /**
-     * 获取状态描述（用于EasyPoi导出）
+     * 验证密码
      */
-    public String getStatusDescription() {
-        switch (status) {
-            case 0: return "未审批";
-            case 1: return "正常";
-            case 2: return "审批未通过";
-            default: return String.valueOf(status);
-        }
+    public boolean validatePassword(String inputPassword, String salt) {
+        String encryptedInput = DigestUtils.md5Hex(inputPassword + salt);
+        return this.password.equals(encryptedInput);
+    }
+
+    /**
+     * 是否已删除
+     */
+    public boolean isDeleted() {
+        return isDelete != null && isDelete == 1;
     }
 }

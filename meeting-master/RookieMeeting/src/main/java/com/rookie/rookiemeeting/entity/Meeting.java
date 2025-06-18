@@ -26,41 +26,54 @@ public class Meeting implements Serializable {
      * 会议ID (主键)
      */
     @TableId(value = "meetingid", type = IdType.AUTO)
-    private Integer meetingid;  // 注意类型为 Integer，与 Controller 中的 @PathVariable 匹配
+    private Integer meetingid;
 
     /**
-     * 会议标题
+     * 会议名称
      */
-    private String title;
-
-    /**
-     * 会议描述
-     */
-    private String description;
+    private String meetingname;
 
     /**
      * 会议室ID
      */
-    @TableField("room_id")
-    private Long roomId;
+    @TableField("roomid")
+    private Integer roomid;
 
     /**
-     * 组织者ID
+     * 预定人ID (组织者ID)
      */
-    @TableField("organizer_id")
-    private Long organizerId;
+    @TableField("reservationistid")
+    private Integer reservationistid;
 
     /**
-     * 开始时间
+     * 参会人数
      */
-    @TableField("start_time")
-    private Date startTime;
+    @TableField("numberofparticipants")
+    private Integer numberofparticipants;
 
     /**
-     * 结束时间
+     * 签到开始时间
      */
-    @TableField("end_time")
-    private Date endTime;
+    @TableField("signinstarttime")
+    private Date signinstarttime;
+
+    /**
+     * 签到结束时间
+     */
+    @TableField("signinendtime")
+    private Date signinendtime;
+
+    /**
+     * 会议开始时间
+     */
+    @TableField("starttime")
+    private Date starttime;
+
+    /**
+     * 会议结束时间
+     */
+    @TableField("endtime")
+    private Date endtime;
 
     /**
      * 预定时间
@@ -69,15 +82,26 @@ public class Meeting implements Serializable {
     private Date reservationtime;
 
     /**
-     * 会议状态 (0:待进行, 1:进行中, 2:已完成, 3:已取消)
+     * 取消时间
+     */
+    @TableField("canceledtime")
+    private Date canceledtime;
+
+    /**
+     * 会议描述
+     */
+    private String description;
+
+    /**
+     * 会议状态 (0:正常, 1:已取消)
      */
     private Integer status;
 
     /**
-     * 创建时间
+     * 取消原因
      */
-    @TableField("create_time")
-    private Date createTime;
+    @TableField("canceledreason")
+    private String canceledreason;
 
     // 其他可能存在的字段...
 }

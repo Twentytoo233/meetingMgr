@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("role")
+@TableName("sys_role")  // 注意表名已改为 sys_role
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,8 +34,14 @@ public class Role implements Serializable {
     private String name;
 
     /**
-     * 角色标识 (如: admin, user, manager)
+     * 角色标识（唯一标识，如：ROLE_ADMIN）
      */
+    private String flag;
+
+    /**
+     * 角色标识 (如: admin, user, manager) - 可能已弃用，建议使用 flag
+     */
+    @Deprecated
     private String roleKey;
 
     /**

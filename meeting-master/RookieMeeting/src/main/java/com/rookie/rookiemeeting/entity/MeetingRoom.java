@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("meeting_room")
+@TableName("meetingroom")  // 注意表名与XML中一致
 public class MeetingRoom implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,18 +25,16 @@ public class MeetingRoom implements Serializable {
      * 会议室ID (主键)
      */
     @TableId(value = "roomid", type = IdType.AUTO)
-    private Integer roomid;  // 注意类型为 Integer，与 Controller 中的 @PathVariable 匹配
+    private Integer roomid;
 
     /**
      * 会议室名称
      */
-    @TableField("roomname")
     private String roomname;
 
     /**
      * 会议室编号
      */
-    @TableField("roomnum")
     private String roomnum;
 
     /**
@@ -45,7 +43,7 @@ public class MeetingRoom implements Serializable {
     private Integer capacity;
 
     /**
-     * 会议室状态 (0:禁用, 1:可用)
+     * 会议室状态 (0:可用, 1:禁用)
      */
     private Integer status;
 
@@ -60,4 +58,11 @@ public class MeetingRoom implements Serializable {
     private String equipment;
 
     // 其他可能存在的字段...
+
+    /**
+     * 状态描述（用于展示）
+     */
+    public String getStatusDesc() {
+        return status == 0 ? "可用" : "禁用";
+    }
 }
